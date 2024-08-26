@@ -57,6 +57,7 @@ class LivroService extends Service
     public function alterar(int $Cod, Request $request): Livro
     {
         $autores = [];
+        $assuntos = [];
 
         $livro = $request->validate([
             'titulo' => 'required|max:40',

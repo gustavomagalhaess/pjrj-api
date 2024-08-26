@@ -64,7 +64,7 @@ abstract class Controller
     {
         $response = $this->service->alterar($Cod, $request);
 
-        return response()->json($response);
+        return response()->json(['updated' => true]);
     }
 
     /**
