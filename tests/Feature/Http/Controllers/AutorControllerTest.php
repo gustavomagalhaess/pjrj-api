@@ -2,19 +2,32 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+use App\Models\Autor;
 use Tests\TestCase;
 
 class AutorControllerTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     */
-    public function test_example(): void
-    {
-        $response = $this->get('/');
 
-        $response->assertStatus(200);
+    public function test_incluir_autor(): void
+    {
+        $autor = Autor::factory()->make();
+
+        $response = $this->postJson('/api/autores', [
+            'nome' => $autor['Nome'],
+        ]);
+
+        $response->assertStatus(201)
+            ->assertJson(['created' => true]);
+    }
+
+    public function test_incluir_campos_em_branco(): void
+    {
+        $response = $this->postJson('/api/autores', [
+            'nome' => '',
+        ]);
+
+        $response->assertInvalid([
+            "nome" => "O campo nome é obrigatório.",
+        ]);
     }
 }

@@ -2,19 +2,32 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+use App\Models\Assunto;
 use Tests\TestCase;
 
 class AssuntoControllerTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     */
-    public function test_example(): void
-    {
-        $response = $this->get('/');
 
-        $response->assertStatus(200);
+    public function test_incluir_assunto(): void
+    {
+        $assunto = Assunto::factory()->make();
+
+        $response = $this->postJson('/api/assuntos', [
+            'descricao' => $assunto['Descricao'],
+        ]);
+
+        $response->assertStatus(201)
+            ->assertJson(['created' => true]);
+    }
+
+    public function test_incluir_campos_em_branco(): void
+    {
+        $response = $this->postJson('/api/assuntos', [
+            'descricao' => '',
+        ]);
+
+        $response->assertInvalid([
+            "descricao" => "O campo descricao é obrigatório.",
+        ]);
     }
 }

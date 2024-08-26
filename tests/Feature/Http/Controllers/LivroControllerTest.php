@@ -3,12 +3,10 @@
 namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Livro;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class LivroControllerTest extends TestCase
 {
-    use RefreshDatabase;
 
     public function test_incluir_livro(): void
     {
