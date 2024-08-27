@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\Repositories;
 
+use App\Exceptions\SaveException;
 use App\Models\Assunto;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class AssuntoRepository extends Repository
 {
@@ -20,12 +22,24 @@ class AssuntoRepository extends Repository
      * @param array $model
      *
      * @return Assunto
+     * @throws SaveException
      */
     public function inserir(array $model): Assunto
     {
-        return Assunto::create([
-            'Descricao' => $model['descricao'],
-        ]);
+        try {
+            DB::beginTransaction();
+
+            $assunto = Assunto::create([
+                'Descricao' => $model['descricao'],
+            ]);
+
+            DB::commit();
+
+            return $assunto;
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            throw new SaveException();
+        }
     }
 
     /**
@@ -34,16 +48,24 @@ class AssuntoRepository extends Repository
      * @param array $form
      *
      * @return Assunto
+     * @throws SaveException
      */
     public function alterar(array $form): Assunto
     {
-        $assunto = assunto::find($form['CodAs']);
+        try {
+            DB::beginTransaction();
 
-        $assunto->Descricao = $form['descricao'];
+            $assunto = assunto::find($form['CodAs']);
+            $assunto->Descricao = $form['descricao'];
+            $assunto->save();
 
-        $assunto->save();
+            DB::commit();
 
-        return $assunto;
+            return $assunto;
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            throw new SaveException();
+        }
     }
 
     /**

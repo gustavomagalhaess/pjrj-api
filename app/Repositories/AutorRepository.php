@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\Repositories;
 
+use App\Exceptions\SaveException;
 use App\Models\Autor;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class AutorRepository extends Repository
 {
@@ -20,12 +22,24 @@ class AutorRepository extends Repository
      * @param array $model
      *
      * @return Autor
+     * @throws SaveException
      */
     public function inserir(array $model): Autor
     {
-        return $this->model::create([
-            'Nome' => $model['nome'],
-        ]);
+        try {
+            DB::beginTransaction();
+
+            $autor = $this->model::create([
+                'Nome' => $model['nome'],
+            ]);
+
+            DB::commit();
+
+            return $autor;
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            throw new SaveException();
+        }
     }
 
     /**
@@ -34,16 +48,26 @@ class AutorRepository extends Repository
      * @param array $form
      *
      * @return Autor
+     * @throws SaveException
      */
     public function alterar(array $form): Autor
     {
-        $autor = $this->model::find($form['CodAu']);
+        try {
+            DB::beginTransaction();
 
-        $autor->Nome = $form['nome'];
+            $autor = $this->model::find($form['CodAu']);
 
-        $autor->save();
+            $autor->Nome = $form['nome'];
+            $autor->save();
 
-        return $autor;
+            DB::commit();
+
+            return $autor;
+
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            throw new SaveException();
+        }
     }
 
     /**

@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace App\Repositories;
 
+use App\Exceptions\SaveException;
 use App\Models\Livro;
+use Illuminate\Support\Facades\DB;
+
 
 class LivroRepository extends Repository
 {
@@ -16,26 +19,39 @@ class LivroRepository extends Repository
     /**
      * Cria um novo livro.
      *
-     * @param array $livro
+     * @param array      $model
+     * @param null|array $autores
+     * @param null|array $assuntos
      *
      * @return Livro
+     * @throws SaveException
      */
     public function inserir(array $model, ?array $autores = [], ?array $assuntos = []): Livro
     {
-        $model = $this->model::create([
-            'Titulo' => $model['titulo'],
-            'Editora' => $model['editora'],
-            'Edicao' => $model['edicao'],
-            'AnoPublicacao' => $model['publicacao'],
-        ]);
+        try {
+            DB::beginTransaction();
 
-        if (! empty($autores)) {
-            $model->autores()->sync($autores);
+            $model = $this->model::create([
+                'Titulo' => $model['titulo'],
+                'Editora' => $model['editora'],
+                'Edicao' => $model['edicao'],
+                'AnoPublicacao' => $model['publicacao'],
+            ]);
+
+            if (! empty($autores)) {
+                $model->autores()->sync($autores);
+            }
+
+            if (! empty($assuntos)) {
+                $model->assuntos()->sync($assuntos);
+            }
+
+            DB::commit();
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            throw new SaveException();
         }
 
-        if (! empty($assuntos)) {
-            $model->assuntos()->sync($assuntos);
-        }
 
         return $model;
     }
@@ -43,26 +59,38 @@ class LivroRepository extends Repository
     /**
      * Altera o livro.
      *
-     * @param array $form
+     * @param array      $form
+     * @param null|array $autores
+     * @param null|array $assuntos
      *
      * @return Livro
+     * @throws SaveException
      */
     public function alterar(array $form, ?array $autores = [], ?array $assuntos = []): Livro
     {
-        $livro = $this->model::find($form['Codl']);
+        try {
+            DB::beginTransaction();
 
-        $livro->Titulo = $form['titulo'];
-        $livro->Editora = $form['editora'];
-        $livro->Edicao = $form['edicao'];
-        $livro->AnoPublicacao = $form['publicacao'];
-        $livro->save();
+            $livro = $this->model::find($form['Codl']);
 
-        if (! empty($autores)) {
-            $livro->autores()->sync($autores);
-        }
+            $livro->Titulo = $form['titulo'];
+            $livro->Editora = $form['editora'];
+            $livro->Edicao = $form['edicao'];
+            $livro->AnoPublicacao = $form['publicacao'];
+            $livro->save();
 
-        if (! empty($assuntos)) {
-            $livro->assuntos()->sync($assuntos);
+            if (!empty($autores)) {
+                $livro->autores()->sync($autores);
+            }
+
+            if (!empty($assuntos)) {
+                $livro->assuntos()->sync($assuntos);
+            }
+
+            DB::commit();
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            throw new SaveException();
         }
 
         return $livro;

@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\Repositories;
 
+use App\Exceptions\DeleteException;
 use App\Models\Livro;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 abstract class Repository implements RepositoryInterface
 {
@@ -38,10 +40,22 @@ abstract class Repository implements RepositoryInterface
      * @param int $Cod
      *
      * @return int
+     * @throws DeleteException
      */
     public function excluir(int $Cod): int
     {
-        return $this->model::destroy($Cod);
+        try {
+            DB::beginTransaction();
+
+            $count = $this->model::destroy($Cod);
+
+            DB::commit();
+
+            return $count;
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            throw new DeleteException();
+        }
     }
 
     abstract public function inserir(array $model): Model;
