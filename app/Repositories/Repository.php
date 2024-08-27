@@ -8,7 +8,7 @@ use App\Models\Livro;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
 
-abstract class Repository
+abstract class Repository implements RepositoryInterface
 {
     public function __construct(public readonly Model $model) {}
 

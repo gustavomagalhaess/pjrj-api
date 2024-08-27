@@ -5,14 +5,15 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Models\Livro;
-use App\Repositories\Repository;
+
+use App\Repositories\RepositoryInterface;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
-abstract class Service
+abstract class Service implements ServiceInterface
 {
-    public function __construct(public readonly Repository $repository) {}
+    public function __construct(public readonly RepositoryInterface $repository) {}
 
     /**
      * Listagem de registros.

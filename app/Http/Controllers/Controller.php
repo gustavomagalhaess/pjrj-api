@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Services\Service;
+use App\Services\ServiceInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-abstract class Controller
+abstract class Controller implements ControllerInterface
 {
-    public function __construct(public readonly Service $service) {}
+    public function __construct(public readonly ServiceInterface $service) {}
 
     /**
      * Listagem de registros.
