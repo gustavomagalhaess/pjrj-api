@@ -39,7 +39,7 @@ php artisan db:seed AssuntoSeeder
 php artisan db:seed LivroSeeder
 ```
 
-### Rodas os testes
+### Executar os testes
 ```
 php artisan test
 ```
