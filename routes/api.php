@@ -32,3 +32,5 @@ Route::delete('/assuntos/{Cod}/excluir', ['App\Http\Controllers\AssuntoControlle
 
 // Rota de relatório
 Route::get('/relatorio', ['App\Http\Controllers\RelatorioController', 'listar']);
+Route::get('/relatorio/autores', ['App\Http\Controllers\RelatorioController', 'autores']);
+Route::get('/relatorio/assuntos', ['App\Http\Controllers\RelatorioController', 'assuntos']);

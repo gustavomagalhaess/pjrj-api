@@ -12,12 +12,32 @@ class RelatorioService
     public function __construct(readonly private RelatorioRepository $repository) {}
 
     /**
-     * Relatóio de livros
+     * Listagem geral de livros com autores e assuntos.
      *
      * @return Collection
      */
     public function listar(): Collection
     {
         return $this->repository->listar();
+    }
+
+    /**
+     * Listagem de quantidade de livros por autor.
+     *
+     * @return Collection
+     */
+    public function autores(): Collection
+    {
+        return $this->repository->autores();
+    }
+
+    /**
+     * Listagem de quantidade de livros por assunto.
+     *
+     * @return Collection
+     */
+    public function assuntos(): Collection
+    {
+        return $this->repository->assuntos();
     }
 }
