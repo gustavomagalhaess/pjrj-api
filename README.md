@@ -2,8 +2,12 @@
 
 ## Configuração de ambiente
 
-### Iniciar o docker
+### Criar o .env file
+```
+cp .env-example .env
+```
 
+### Iniciar o docker
 ```
 docker compose up
 ```
@@ -11,11 +15,6 @@ docker compose up
 ### Acessar o container do laravel
 ```
 docker container exec -it [nome do container laravel] bash
-```
-
-### Criar o .env file
-```
-cp .env-example .env
 ```
 
 ### Instalar as dependências
