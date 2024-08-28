@@ -2,6 +2,8 @@
 
 ## Configuração de ambiente
 
+### [Instalar o docker](https://docs.docker.com/engine/install/)
+
 ### Criar o .env file
 ```
 cp .env-example .env
