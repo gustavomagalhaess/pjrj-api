@@ -2,16 +2,16 @@
 
 namespace Database\Seeders;
 
-use App\Models\Assunto;
+use App\Models\Subject;
 use Illuminate\Database\Seeder;
 
-class AssuntoSeeder extends Seeder
+class SubjectSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Assunto::factory(10)->create();
+        Subject::factory(10)->create();
     }
 }
