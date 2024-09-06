@@ -2,12 +2,13 @@
 
 namespace Database\Factories;
 
+use App\Models\Subject;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Assunto>
+ * @extends Factory<Subject>
  */
-class AssuntoFactory extends Factory
+class SubjectFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,7 +18,7 @@ class AssuntoFactory extends Factory
     public function definition(): array
     {
         return [
-            "Descricao" => fake()->text(20),
+            "description" => fake()->text(20),
         ];
     }
 }
