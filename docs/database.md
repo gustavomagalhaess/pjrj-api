@@ -85,7 +85,7 @@ INNER JOIN books b ON ab.book_id = b.id
 
 CREATE VIEW report_subject AS (
     SELECT s.description,
-           COUNT(li.id) AS Qde
+           COUNT(b.id) AS Qde
       FROM subjects s
 INNER JOIN book_subject bs ON s.id = bs.subject_id
 INNER JOIN books b ON bs.book_id = b.id
