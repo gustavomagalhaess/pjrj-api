@@ -4,9 +4,12 @@
 
 ### [Install docker](https://docs.docker.com/engine/install/)
 
-### Create .env file
+### Create .env files
 ```
 cp .env-example .env
+cp .env-example .env-testing
+
+Into the .env-testing sets to DB_DATABASE=testing
 ```
 
 ### Init docker
@@ -32,6 +35,7 @@ php artisan key:generate
 ### Create the database
 ```
 php artisan migrate
+php artisan migrate --env=testing
 ```
 
 ### Create fake records on database
