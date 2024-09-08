@@ -1,6 +1,6 @@
 # Dump do banco de dados
 ## Book table script.
-```sql
+```mysql
  create table 'books' (
      'id' bigint unsigned not null auto_increment primary key, 
      'title' varchar(40) not null, 
@@ -11,7 +11,7 @@
 ```
 
 ## Author table script.
-```sql
+```mysql
 create table 'authors' (
     'id' bigint unsigned not null auto_increment primary key, 
     'name' varchar(40) not null
@@ -19,7 +19,7 @@ create table 'authors' (
 ```
 
 ## Subject table script.
-```sql
+```mysql
 create table 'subjects' (
     'id' bigint unsigned not null auto_increment primary key, 
     'description' varchar(20) not null
@@ -27,7 +27,7 @@ create table 'subjects' (
 ```
 
 ## Author Book pivot table script.
-```sql
+```mysql
 create table 'author_book' (
     'book_id' bigint unsigned not null, 
     'author_id' bigint unsigned not null
@@ -39,7 +39,7 @@ alter table 'author_book' add unique 'author_book_unique_index'('author_id', 'bo
 ```
 
 ## Book subject pivot table script.
-```sql
+```mysql
 create table 'book_subject' (
     'book_id' bigint unsigned not null, 
     'subject_id' bigint unsigned not null
@@ -51,7 +51,7 @@ alter table 'book_subject' add unique 'book_subject_unique_index'('book_id', 'su
 ```
 
 ## Views scripts.
-```sql
+```mysql
 CREATE VIEW report AS (
    SELECT b.id,
           b.title,
