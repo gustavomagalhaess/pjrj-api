@@ -1,47 +1,47 @@
-# Aplicação de cadastro de livros
+# Books CRUD application
 
-## Configuração de ambiente
+## Enviroment configuration
 
-### [Instalar o docker](https://docs.docker.com/engine/install/)
+### [Install docker](https://docs.docker.com/engine/install/)
 
-### Criar o .env file
+### Create .env file
 ```
 cp .env-example .env
 ```
 
-### Iniciar o docker
+### Init docker
 ```
 docker compose up
 ```
 
-### Acessar o container do laravel
+### Access laravel container
 ```
-docker container exec -it [nome do container laravel] bash
+docker container exec -it [laravel container name] bash
 ```
 
-### Instalar as dependências
+### Install dependencies
 ```
 composer install
 ```
 
-### Executar o comando
+### Create application key
 ```
 php artisan key:generate
 ```
 
-### Criar os bancos
+### Create the database
 ```
 php artisan migrate
 ```
 
-### Criar popular a base
+### Create fake records on database
 ```
-php artisan db:seed AutorSeeder
-php artisan db:seed AssuntoSeeder
-php artisan db:seed LivroSeeder
+php artisan db:seed AuthorSeeder
+php artisan db:seed SubjectSeeder
+php artisan db:seed BookSeeder
 ```
 
-### Executar os testes
+### Execute the tests
 ```
 php artisan test
 ```
