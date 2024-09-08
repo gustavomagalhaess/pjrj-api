@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -7,30 +9,30 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-// Rotas de livros
-Route::get('/livros', ['App\Http\Controllers\LivroController', 'listar']);
-Route::post('/livros', ['App\Http\Controllers\LivroController', 'inserir']);
-Route::get('/livros/{Cod}', ['App\Http\Controllers\LivroController', 'buscar']);
-Route::put('/livros/{Cod}/alterar', ['App\Http\Controllers\LivroController', 'alterar']);
-Route::delete('/livros/{Cod}/excluir', ['App\Http\Controllers\LivroController', 'excluir']);
+// Rotas de books
+Route::get('/books', ['App\Http\Controllers\BookController', 'list']);
+Route::post('/books', ['App\Http\Controllers\BookController', 'store']);
+Route::get('/books/{id}', ['App\Http\Controllers\BookController', 'find']);
+Route::put('/books/{id}', ['App\Http\Controllers\BookController', 'update']);
+Route::delete('/books/{id}', ['App\Http\Controllers\BookController', 'delete']);
 
-// Rotas de autores
-Route::get('/autores', ['App\Http\Controllers\AutorController', 'listar']);
-Route::get('/autores/todos', ['App\Http\Controllers\AutorController', 'todos']);
-Route::post('/autores', ['App\Http\Controllers\AutorController', 'inserir']);
-Route::get('/autores/{Cod}', ['App\Http\Controllers\AutorController', 'buscar']);
-Route::put('/autores/{Cod}/alterar', ['App\Http\Controllers\AutorController', 'alterar']);
-Route::delete('/autores/{Cod}/excluir', ['App\Http\Controllers\AutorController', 'excluir']);
+// Rotas de authors
+Route::get('/authors', ['App\Http\Controllers\AuthorController', 'list']);
+Route::get('/authors/all', ['App\Http\Controllers\AuthorController', 'todos']);
+Route::post('/authors', ['App\Http\Controllers\AuthorController', 'store']);
+Route::get('/authors/{id}', ['App\Http\Controllers\AuthorController', 'find']);
+Route::put('/authors/{id}', ['App\Http\Controllers\AuthorController', 'update']);
+Route::delete('/authors/{id}', ['App\Http\Controllers\AuthorController', 'delete']);
 
-// Rotas de assuntos
-Route::get('/assuntos', ['App\Http\Controllers\AssuntoController', 'listar']);
-Route::get('/assuntos/todos', ['App\Http\Controllers\AssuntoController', 'todos']);
-Route::post('/assuntos', ['App\Http\Controllers\AssuntoController', 'inserir']);
-Route::get('/assuntos/{Cod}', ['App\Http\Controllers\AssuntoController', 'buscar']);
-Route::put('/assuntos/{Cod}/alterar', ['App\Http\Controllers\AssuntoController', 'alterar']);
-Route::delete('/assuntos/{Cod}/excluir', ['App\Http\Controllers\AssuntoController', 'excluir']);
+// Rotas de subjects
+Route::get('/subjects', ['App\Http\Controllers\SubjectController', 'list']);
+Route::get('/subjects/all', ['App\Http\Controllers\SubjectController', 'todos']);
+Route::post('/subjects', ['App\Http\Controllers\SubjectController', 'store']);
+Route::get('/subjects/{id}', ['App\Http\Controllers\SubjectController', 'find']);
+Route::put('/subjects/{id}', ['App\Http\Controllers\SubjectController', 'update']);
+Route::delete('/subjects/{id}', ['App\Http\Controllers\SubjectController', 'delete']);
 
 // Rota de relatório
-Route::get('/relatorio', ['App\Http\Controllers\RelatorioController', 'listar']);
-Route::get('/relatorio/autores', ['App\Http\Controllers\RelatorioController', 'autores']);
-Route::get('/relatorio/assuntos', ['App\Http\Controllers\RelatorioController', 'assuntos']);
+Route::get('/report', ['App\Http\Controllers\ReportController', 'list']);
+Route::get('/report/authors', ['App\Http\Controllers\ReportController', 'authors']);
+Route::get('/report/subjects', ['App\Http\Controllers\ReportController', 'subjects']);
