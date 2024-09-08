@@ -5,37 +5,42 @@ declare(strict_types=1);
 namespace App\Repositories;
 
 use App\Exceptions\SaveException;
-use App\Models\Autor;
+use App\Models\Subject;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
-class AutorRepository extends Repository
+class SubjectRepository extends AbstractRepository
 {
-    public function __construct(Autor $model)
+    /**
+     * Sets $this->model as Subject.
+     *
+     * @param Subject $subject
+     */
+    public function __construct(Subject $subject)
     {
-        parent::__construct($model);
+        parent::__construct($subject);
     }
 
     /**
-     * Cria um novo autor.
+     * Stores a new subject.
      *
-     * @param array $model
+     * @param array $form
      *
-     * @return Autor
+     * @return Subject
      * @throws SaveException
      */
-    public function inserir(array $model): Autor
+    public function store(array $form): Subject
     {
         try {
             DB::beginTransaction();
 
-            $autor = $this->model::create([
-                'Nome' => $model['nome'],
+            $subject = Subject::create([
+                'description' => $form['description'],
             ]);
 
             DB::commit();
 
-            return $autor;
+            return $subject;
         } catch (\Throwable $e) {
             DB::rollBack();
             throw new SaveException();
@@ -43,27 +48,25 @@ class AutorRepository extends Repository
     }
 
     /**
-     * Altera o autor.
+     * Updates the subject.
      *
      * @param array $form
      *
-     * @return Autor
+     * @return Subject
      * @throws SaveException
      */
-    public function alterar(array $form): Autor
+    public function update(array $form): Subject
     {
         try {
             DB::beginTransaction();
 
-            $autor = $this->model::find($form['CodAu']);
-
-            $autor->Nome = $form['nome'];
-            $autor->save();
+            $subject = Subject::find($form['id']);
+            $subject->description = $form['description'];
+            $subject->save();
 
             DB::commit();
 
-            return $autor;
-
+            return $subject;
         } catch (\Throwable $e) {
             DB::rollBack();
             throw new SaveException();
@@ -71,11 +74,11 @@ class AutorRepository extends Repository
     }
 
     /**
-     * Listagem dos autores sem paginação.
+     * No pagination subject list.
      *
      * @return Collection
      */
-    public function todos(): Collection
+    public function all(): Collection
     {
         return $this->model::all();
     }
