@@ -56,7 +56,7 @@ class AuthorService extends AbstractService
     {
         return $request->validate([
             'name' => 'required|max:40',
-        ]);;
+        ]);
     }
 
     /**
