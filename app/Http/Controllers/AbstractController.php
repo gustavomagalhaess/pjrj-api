@@ -8,75 +8,75 @@ use App\Services\ServiceInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-abstract class Controller implements ControllerInterface
+abstract class AbstractController implements ControllerInterface
 {
     public function __construct(public readonly ServiceInterface $service) {}
 
     /**
-     * Listagem de registros.
+     * Retrieves records list.
      *
      * @return JsonResponse
      */
-    public function listar(): JsonResponse
+    public function list(): JsonResponse
     {
-        $response = $this->service->listar();
+        $response = $this->service->list();
 
         return response()->json($response);
     }
 
     /**
-     * Busca registro por Cod.
+     * Finds a record by id.
      *
-     * @param int $Cod
+     * @param int $id
      *
      * @return JsonResponse
      */
-    public function buscar(int $Cod): JsonResponse
+    public function find(int $id): JsonResponse
     {
-        $response = $this->service->buscar($Cod);
+        $response = $this->service->find($id);
 
         return response()->json($response);
     }
 
     /**
-     * Cria um novo registro.
+     * Stores a new record.
      *
      * @param Request $request
      *
      * @return JsonResponse
      */
-    public function inserir(Request $request): JsonResponse
+    public function store(Request $request): JsonResponse
     {
-        $response = $this->service->inserir($request);
+        $this->service->store($request);
 
         return response()->json(['created' => true], 201);
     }
 
     /**
-     * Altera o registro.
+     * Updates the record.
      *
-     * @param int     $Cod
+     * @param int     $id
      * @param Request $request
      *
      * @return JsonResponse
      */
-    public function alterar(int $Cod, Request $request): JsonResponse
+    public function update(int $id, Request $request): JsonResponse
     {
-        $response = $this->service->alterar($Cod, $request);
+        $this->service->update($id, $request);
 
         return response()->json(['updated' => true]);
     }
 
     /**
-     * Exclui registro por Cod.
+     * Deletes a record by id.
      *
-     * @param int $Cod
+     * @param int $id
      *
      * @return JsonResponse
      */
-    public function excluir(int $Cod): JsonResponse
+    public function delete(int $id): JsonResponse
     {
-        $count = $this->service->excluir($Cod);
+        $count = $this->service->delete($id);
 
         return response()->json(['deleted' => $count > 0]);
     }
