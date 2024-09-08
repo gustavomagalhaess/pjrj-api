@@ -1,95 +1,95 @@
 # Dump do banco de dados
-## Script de criação da tabela Livro
+## Book table script.
 ```sql
- create table `Livro` (
-     `Codl` bigint unsigned not null auto_increment primary key, 
-     `Titulo` varchar(40) not null, 
-     `Editora` varchar(40) not null, 
-     `Edicao` int not null, 
-     `AnoPublicacao` varchar(4) not null
+ create table 'books' (
+     'id' bigint unsigned not null auto_increment primary key, 
+     'title' varchar(40) not null, 
+     'publisher' varchar(40) not null, 
+     'edition' int not null, 
+     'published_at' varchar(4) not null
 ) default character set utf8mb4 collate 'utf8mb4_unicode_ci';
 ```
 
-## Script de criação da tabela Autor
+## Author table script.
 ```sql
-create table `Autor` (
-    `CodAu` bigint unsigned not null auto_increment primary key, 
-    `Nome` varchar(40) not null
+create table 'authors' (
+    'id' bigint unsigned not null auto_increment primary key, 
+    'name' varchar(40) not null
 ) default character set utf8mb4 collate 'utf8mb4_unicode_ci';
 ```
 
-## Script de criação da tabela Assunto
+## Subject table script.
 ```sql
-create table `Assunto` (
-    `CodAs` bigint unsigned not null auto_increment primary key, 
-    `Descricao` varchar(20) not null
+create table 'subjects' (
+    'id' bigint unsigned not null auto_increment primary key, 
+    'description' varchar(20) not null
 ) default character set utf8mb4 collate 'utf8mb4_unicode_ci';
 ```
 
-## Script de criação da tabela Livro_Autor
+## Author Book pivot table script.
 ```sql
-create table `Livro_Autor` (
-    `Livro_Codl` bigint unsigned not null, 
-    `Autor_CodAu` bigint unsigned not null
+create table 'author_book' (
+    'book_id' bigint unsigned not null, 
+    'author_id' bigint unsigned not null
 ) default character set utf8mb4 collate 'utf8mb4_unicode_ci';
 
-alter table `Livro_Autor` add constraint `Livro_Autor_FKIndex1` foreign key (`Livro_Codl`) references `Livro` (`Codl`) on delete cascade;
-alter table `Livro_Autor` add constraint `Livro_Autor_FKIndex2` foreign key (`Autor_CodAu`) references `Autor` (`CodAu`) on delete cascade;
-alter table `Livro_Autor` add unique `Livro_Autor_Unique_Index`(`Livro_Codl`, `Autor_CodAu`);
+alter table 'author_book' add constraint 'author_book_index_1' foreign key ('book_id') references 'books' ('id') on delete cascade;
+alter table 'author_book' add constraint 'author_book_index_2' foreign key ('author_id') references 'authors' ('id') on delete cascade;
+alter table 'author_book' add unique 'author_book_unique_index'('author_id', 'book_id');
 ```
 
-## Script de criação da tabela Livro_Assunto
+## Book subject pivot table script.
 ```sql
-create table `Livro_Assunto` (
-    `Livro_Codl` bigint unsigned not null, 
-    `Assunto_CodAs` bigint unsigned not null
+create table 'book_subject' (
+    'book_id' bigint unsigned not null, 
+    'subject_id' bigint unsigned not null
 ) default character set utf8mb4 collate 'utf8mb4_unicode_ci';
 
-alter table `Livro_Assunto` add constraint `Livro_Assunto_FKIndex1` foreign key (`Livro_Codl`) references `Livro` (`Codl`) on delete cascade;
-alter table `Livro_Assunto` add constraint `Livro_Assunto_FKIntex2` foreign key (`Assunto_CodAs`) references `Assunto` (`CodAs`) on delete cascade;
-alter table `Livro_Assunto` add unique `Livro_Assunto_Unique_Index`(`Livro_Codl`, `Assunto_CodAs`);
+alter table 'book_subject' add constraint 'book_subject_index_1' foreign key ('book_id') references 'books' ('id') on delete cascade;
+alter table 'book_subject' add constraint 'book_subject_index_2' foreign key ('subject_id') references 'subjects' ('id') on delete cascade;
+alter table 'book_subject' add unique 'book_subject_unique_index'('book_id', 'subject_id');
 ```
 
-## Script de criação das views
+## Views scripts.
 ```sql
-CREATE VIEW Relatorio AS (
-   SELECT li.Codl,
-          li.Titulo,
-          GROUP_CONCAT(DISTINCT a.Nome ORDER BY a.Nome SEPARATOR ', ') As Autor,
-          GROUP_CONCAT(DISTINCT ass.Descricao ORDER BY ass.Descricao SEPARATOR ', ') AS Assunto,
-          li.Edicao,
-          li.Editora,
-          li.AnoPublicacao
-      FROM Livro li
- LEFT JOIN Livro_Autor la ON li.Codl = la.Livro_Codl
- LEFT JOIN Autor a ON la.Autor_CodAu = a.CodAu
- LEFT JOIN Livro_Assunto las ON li.Codl = las.Livro_Codl
- LEFT JOIN Assunto ass ON las.Assunto_CodAs = ass.CodAs
-  GROUP BY li.Codl,
-           li.Titulo,
-           li.Edicao,
-           li.Editora,
-           li.AnoPublicacao
-  ORDER BY Autor
+CREATE VIEW report AS (
+   SELECT b.id,
+          b.title,
+          GROUP_CONCAT(DISTINCT a.name ORDER BY a.name SEPARATOR ', ') AS authors,
+          GROUP_CONCAT(DISTINCT s.description ORDER BY s.description SEPARATOR ', ') AS subjects,
+          b.edition,
+          b.publisher,
+          b.published_at
+      FROM books b
+ LEFT JOIN author_book ab ON b.id = ab.book_id
+ LEFT JOIN authors a ON ab.author_id = a.id
+ LEFT JOIN book_subject bs ON b.id = bs.book_id
+ LEFT JOIN subjects s ON bs.subject_id = s.id
+  GROUP BY b.id,
+           b.title,
+           b.edition,
+           b.publisher,
+           b.published_at
+  ORDER BY authors
 );
 
-CREATE VIEW Relatorio_Autor AS (
-    SELECT au.Nome,
-           COUNT(li.Codl) AS Qde
-      FROM Autor au
-INNER JOIN Livro_Autor la ON au.CodAu = la.Autor_CodAu
-INNER JOIN Livro li ON la.Livro_Codl = li.Codl
-  GROUP BY au.Nome
-  ORDER BY au.Nome
+CREATE VIEW report_author AS (
+    SELECT a.name,
+           COUNT(b.id) AS Qde
+      FROM authors a
+INNER JOIN author_book ab ON a.id = ab.author_id
+INNER JOIN books b ON ab.book_id = b.id
+  GROUP BY a.name
+  ORDER BY a.name
 );
 
-CREATE VIEW Relatorio_Assunto AS (
-    SELECT ass.Descricao,
-           COUNT(li.Codl) AS Qde
-      FROM Assunto ass
-INNER JOIN Livro_Assunto las ON ass.CodAs = las.Assunto_CodAs
-INNER JOIN Livro li ON las.Livro_Codl = li.Codl
-  GROUP BY ass.Descricao
-  ORDER BY ass.Descricao
+CREATE VIEW report_subject AS (
+    SELECT s.description,
+           COUNT(li.id) AS Qde
+      FROM subjects s
+INNER JOIN book_subject bs ON s.id = bs.subject_id
+INNER JOIN books b ON bs.book_id = b.id
+  GROUP BY s.description
+  ORDER BY s.description
 );
 ```

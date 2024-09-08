@@ -1,0 +1,134 @@
+{
+	"info": {
+		"_postman_id": "68f3a02f-58e9-4aba-ae7f-1b99449019e5",
+		"name": "Book",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "423966"
+	},
+	"item": [
+		{
+			"name": "books",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{api}}/books",
+					"host": [
+						"{{api}}"
+					],
+					"path": [
+						"books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "books",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "title",
+							"value": "Book",
+							"type": "text"
+						},
+						{
+							"key": "publisher",
+							"value": "Globo",
+							"type": "text"
+						},
+						{
+							"key": "edition",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "published_at",
+							"value": "2024",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{api}}/books",
+					"host": [
+						"{{api}}"
+					],
+					"path": [
+						"books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "books",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "title",
+							"value": "Book",
+							"type": "text"
+						},
+						{
+							"key": "publisher",
+							"value": "Globo",
+							"type": "text"
+						},
+						{
+							"key": "edition",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "published_at",
+							"value": "2024",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{api}}/books/1",
+					"host": [
+						"{{api}}"
+					],
+					"path": [
+						"books",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "books",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "{{api}}/books/1",
+					"host": [
+						"{{api}}"
+					],
+					"path": [
+						"books",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

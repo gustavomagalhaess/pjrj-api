@@ -1,0 +1,104 @@
+{
+	"info": {
+		"_postman_id": "dca81fcc-c993-4a3c-ba92-b76d5f081cdd",
+		"name": "Subject",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "423966"
+	},
+	"item": [
+		{
+			"name": "subjects",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{api}}/subjects",
+					"host": [
+						"{{api}}"
+					],
+					"path": [
+						"subjects"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "subjects",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "description",
+							"value": "Subject",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{api}}/subjects",
+					"host": [
+						"{{api}}"
+					],
+					"path": [
+						"subjects"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "subjects",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "description",
+							"value": "Subject",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{api}}/subjects/1",
+					"host": [
+						"{{api}}"
+					],
+					"path": [
+						"subjects",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "subjects",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "{{api}}/subjects/1",
+					"host": [
+						"{{api}}"
+					],
+					"path": [
+						"subjects",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

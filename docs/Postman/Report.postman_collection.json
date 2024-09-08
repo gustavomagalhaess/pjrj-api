@@ -1,0 +1,63 @@
+{
+	"info": {
+		"_postman_id": "f760186e-412b-45b6-a2f6-5bdda9807489",
+		"name": "Report",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "423966"
+	},
+	"item": [
+		{
+			"name": "report",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{api}}/report",
+					"host": [
+						"{{api}}"
+					],
+					"path": [
+						"report"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "report/authors",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{api}}/report/authors",
+					"host": [
+						"{{api}}"
+					],
+					"path": [
+						"report",
+						"authors"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "report/subjects",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{api}}/report/subjects",
+					"host": [
+						"{{api}}"
+					],
+					"path": [
+						"report",
+						"subjects"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
