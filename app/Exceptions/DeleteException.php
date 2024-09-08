@@ -7,7 +7,7 @@ use Exception;
 
 class DeleteException extends Exception
 {
-    public function __construct(string $message = Messages::MSG_EXCLUIR, int $code = 400)
+    public function __construct(string $message = Messages::MSG_DELETE, int $code = 500)
     {
         parent::__construct($message, $code);
     }
