@@ -27,6 +27,13 @@ class Book extends Model
     protected $fillable = ['title', 'publisher', 'edition', 'published_at'];
 
     /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = ['created_at', 'updated_at'];
+
+    /**
      * Book's authors.
      *
      * @return BelongsToMany

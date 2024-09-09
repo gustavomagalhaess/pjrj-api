@@ -27,6 +27,13 @@ class Subject extends Model
     protected $fillable = ['description'];
 
     /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = ['created_at', 'updated_at'];
+
+    /**
      * Subject's books.
      *
      * @return BelongsToMany
