@@ -80,4 +80,18 @@ abstract class AbstractController implements ControllerInterface
 
         return response()->json(['deleted' => $count > 0]);
     }
+
+    /**
+     * Searches an item by query.
+     *
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function search(Request $request)
+    {
+        $query = $request->query('q', '');
+
+        return response()->json($this->service->search($query));
+    }
 }

@@ -119,4 +119,16 @@ class BookRepository extends AbstractRepository
             $book->subjects()->sync($subjects);
         }
     }
+
+    /**
+     * Searches an item by query.
+     *
+     * @param string $query
+     *
+     * @return mixed
+     */
+    public function search(string $query)
+    {
+        return $this->model::where('title', 'like', "%$query%")->get();
+    }
 }

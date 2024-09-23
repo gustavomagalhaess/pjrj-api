@@ -47,6 +47,18 @@ abstract class AbstractService implements ServiceInterface
         return $this->repository->delete($id);
     }
 
+    /**
+     * Searches an item by query.
+     *
+     * @param string $query
+     *
+     * @return mixed
+     */
+    public function search(string $query)
+    {
+        return $this->repository->search($query);
+    }
+
     abstract public function store(Request $request);
     abstract public function update(int $id, Request $request);
 }

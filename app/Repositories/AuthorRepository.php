@@ -84,4 +84,16 @@ class AuthorRepository extends AbstractRepository
     {
         return $this->model::all();
     }
+
+    /**
+     * Searches an item by query.
+     *
+     * @param string $query
+     *
+     * @return mixed
+     */
+    public function search(string $query)
+    {
+        return $this->model::where('name', 'like', "%$query%")->get();
+    }
 }

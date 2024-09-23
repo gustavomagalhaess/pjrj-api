@@ -11,6 +11,7 @@ Route::get('/user', function (Request $request) {
 
 // Rotas de books
 Route::get('/books', ['App\Http\Controllers\BookController', 'list']);
+Route::get('/books/search', ['App\Http\Controllers\BookController', 'search']);
 Route::post('/books', ['App\Http\Controllers\BookController', 'store']);
 Route::get('/books/{id}', ['App\Http\Controllers\BookController', 'find']);
 Route::put('/books/{id}', ['App\Http\Controllers\BookController', 'update']);
@@ -18,6 +19,7 @@ Route::delete('/books/{id}', ['App\Http\Controllers\BookController', 'delete']);
 
 // Rotas de authors
 Route::get('/authors', ['App\Http\Controllers\AuthorController', 'list']);
+Route::get('/authors/search', ['App\Http\Controllers\AuthorController', 'search']);
 Route::get('/authors/all', ['App\Http\Controllers\AuthorController', 'all']);
 Route::post('/authors', ['App\Http\Controllers\AuthorController', 'store']);
 Route::get('/authors/{id}', ['App\Http\Controllers\AuthorController', 'find']);
@@ -26,6 +28,7 @@ Route::delete('/authors/{id}', ['App\Http\Controllers\AuthorController', 'delete
 
 // Rotas de subjects
 Route::get('/subjects', ['App\Http\Controllers\SubjectController', 'list']);
+Route::get('/subjects/search', ['App\Http\Controllers\SubjectController', 'search']);
 Route::get('/subjects/all', ['App\Http\Controllers\SubjectController', 'all']);
 Route::post('/subjects', ['App\Http\Controllers\SubjectController', 'store']);
 Route::get('/subjects/{id}', ['App\Http\Controllers\SubjectController', 'find']);
